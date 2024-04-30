@@ -1,10 +1,11 @@
 import React from 'react';
-import { Formik, useFormik } from 'formik';
+import { useFormik } from 'formik';
+import { Form, Button, FloatingLabel } from 'react-bootstrap';
 
 const LoginForm = () => {
   const formik = useFormik({
     initialValues: {
-      nickname: '',
+      username: '',
       password: '',
     },
     onSubmit: values => {
@@ -12,25 +13,35 @@ const LoginForm = () => {
   });
 
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <label htmlFor="nickname">Ваш ник</label>
-      <input
-        id="nickname"
-        name="nickname"
-        type="nickname"
-        onChange={formik.handleChange}
-        value={formik.values.nickname}
-      />
-      <label htmlFor="password">Ваш пароль</label>
-      <input
-        id="password"
-        name="password"
-        type="password" 
-        onChange={formik.handleChange}
-        value={formik.values.password}
-      />
-      <button type="submit">Войти</button>
-    </form>
+    <Form className="col-12 col-md-6 mt-3 mt-mb-0 form-width form-center" onSubmit={formik.handleSubmit}>
+      <h1>Войти</h1>
+      <Form.Group className="mb-3" floating>
+        <FloatingLabel className="mb-3" label="Ваш ник">
+          <Form.Control 
+            id="username" 
+            name="username" 
+            type="text" 
+            placeholder="Ваш ник"
+            onChange={formik.handleChange}
+            value={formik.values.username}
+          />
+        </FloatingLabel>
+      </Form.Group>
+
+      <Form.Group className="mb-3">
+        <FloatingLabel className="mb-3" label="Ваш пароль">
+          <Form.Control 
+            id="password" 
+            name="password" 
+            type="password" 
+            placeholder="Ваш пароль"
+            onChange={formik.handleChange}
+            value={formik.values.password}
+          />
+        </FloatingLabel>
+      </Form.Group>
+      <Button variant="primary" type="submit">Войти</Button>
+    </Form>
   );
 };
 
