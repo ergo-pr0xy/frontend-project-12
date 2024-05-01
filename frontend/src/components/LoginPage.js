@@ -2,7 +2,7 @@ import React from 'react';
 import { useFormik } from 'formik';
 import { Form, Button, FloatingLabel } from 'react-bootstrap';
 
-const LoginForm = () => {
+const LoginPage = () => {
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -13,7 +13,7 @@ const LoginForm = () => {
   });
 
   return (
-    <Form className="col-12 col-md-6 mt-3 mt-mb-0 form-width form-center" onSubmit={formik.handleSubmit}>
+    <Form className="col-12 col-md-6 mt-3 mt-mb-0 center form-width form-size" onSubmit={formik.handleSubmit}>
       <h1>Войти</h1>
       <Form.Group className="mb-3" floating>
         <FloatingLabel className="mb-3" label="Ваш ник">
@@ -45,4 +45,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default LoginPage;

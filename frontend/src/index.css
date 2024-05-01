@@ -12,11 +12,23 @@ code {
     monospace;
 }
 
+.form-size {
+  height: auto;
+}
+
 .form-width {
   max-width: 500px;
 }
 
-.form-center {
+.center {
   display: block;
   margin: auto;
 }
+
+.container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  margin-top: 200px;
+}
+
