@@ -1,19 +1,32 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import { Form, Button, FloatingLabel } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+
+import { authUser } from '../slices/AuthSlice.js';
 
 const LoginPage = () => {
+  const dispatch = useDispatch();
+
   const formik = useFormik({
     initialValues: {
       username: '',
       password: '',
     },
-    onSubmit: values => {
-    },
+    // onSubmit: values => {
+    //   console.log(values);
+    // },
   });
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const username = formik.values.username;
+    const password = formik.values.password;
+    dispatch(authUser({ username, password }));
+  };
+
   return (
-    <Form className="col-12 col-md-6 mt-3 mt-mb-0 center form-width form-size" onSubmit={formik.handleSubmit}>
+    <Form className="col-12 col-md-6 mt-3 mt-mb-0 center form-size" onSubmit={handleSubmit}>
       <h1>Войти</h1>
       <Form.Group className="mb-3" floating>
         <FloatingLabel className="mb-3" label="Ваш ник">
