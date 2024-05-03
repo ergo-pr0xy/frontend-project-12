@@ -36,3 +36,4 @@ rules:
   testing-library/no-debug: 0
   react/jsx-filename-extension: [1, { "extensions": [".js", ".jsx"] }]
   functional/no-return-void: 0
+  no-unused-vars: "warn"
