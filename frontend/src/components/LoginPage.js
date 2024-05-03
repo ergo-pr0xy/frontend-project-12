@@ -13,27 +13,18 @@ const LoginPage = () => {
       username: '',
       password: '',
     },
-    // onSubmit: values => {
-    //   console.log(values);
-    // },
+    onSubmit: ({ username, password }) => dispatch(authUser({ username, password })),
   });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const username = formik.values.username;
-    const password = formik.values.password;
-    dispatch(authUser({ username, password }));
-  };
-
   return (
-    <Form className="col-12 col-md-6 mt-3 mt-mb-0 center form-size" onSubmit={handleSubmit}>
+    <Form className="col-12 col-md-6 mt-3 mt-mb-0 center form-size" onSubmit={formik.handleSubmit}>
       <h1>Войти</h1>
       <Form.Group className="mb-3" floating>
         <FloatingLabel className="mb-3" label="Ваш ник">
-          <Form.Control 
-            id="username" 
-            name="username" 
-            type="text" 
+          <Form.Control
+            id="username"
+            name="username"
+            type="text"
             placeholder="Ваш ник"
             onChange={formik.handleChange}
             value={formik.values.username}
@@ -43,10 +34,10 @@ const LoginPage = () => {
 
       <Form.Group className="mb-3">
         <FloatingLabel className="mb-3" label="Ваш пароль">
-          <Form.Control 
-            id="password" 
-            name="password" 
-            type="password" 
+          <Form.Control
+            id="password"
+            name="password"
+            type="password"
             placeholder="Ваш пароль"
             onChange={formik.handleChange}
             value={formik.values.password}

@@ -6,10 +6,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import './index.css';
 import App from './App.js';
-import store from './slices/index.js'
+import store from './slices/index.js';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+const vdom = (
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
@@ -18,3 +17,6 @@ root.render(
     </BrowserRouter>
   </React.StrictMode>
 );
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(vdom);
