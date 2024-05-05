@@ -9,6 +9,7 @@ const LoginPage = () => {
   const dispatch = useDispatch();
 
   const token = useSelector((state) => state.auth.token);
+  const error = useSelector((state) => state.auth.error);
 
   const formik = useFormik({
     initialValues: {
@@ -18,7 +19,7 @@ const LoginPage = () => {
     onSubmit: ({ username, password }) => dispatch(authUser({ username, password })),
   });
 
-  if (token) {
+  if (token && !error) {
     return (
       <Navigate to="/" />
     );
@@ -50,8 +51,12 @@ const LoginPage = () => {
             placeholder="Ваш пароль"
             onChange={formik.handleChange}
             value={formik.values.password}
+            isInvalid={!!error}
             required
           />
+          <Form.Control.Feedback type="invalid" tooltip>
+            Неверные имя пользователя или пароль
+          </Form.Control.Feedback>
         </FloatingLabel>
       </Form.Group>
       <Button variant="primary" type="submit">Войти</Button>

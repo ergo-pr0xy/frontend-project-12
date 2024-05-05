@@ -4,7 +4,9 @@ import { useSelector } from 'react-redux';
 
 const ChatPage = () => {
   const token = useSelector((state) => state.auth.token);
+  const currentState = useSelector((state) => state.auth);
 
+  console.log(currentState);
   if (!token) {
     return <Navigate to="/login" />;
   }
