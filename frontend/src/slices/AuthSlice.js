@@ -23,7 +23,7 @@ export const authUser = createAsyncThunk(
 
 const AuthSlice = createSlice({
   name: 'auth',
-  initialState: { user: null, token: null, errorMessage: '' },
+  initialState: { username: null, token: null, errorMessage: '' },
   extraReducers: (builder) => {
     builder
       .addCase(authUser.rejected, (state, action) => {
@@ -31,10 +31,11 @@ const AuthSlice = createSlice({
         state.errorMessage = setErrorMessage(errorCode);
       })
       .addCase(authUser.fulfilled, (state, action) => {
-        console.log(action);
         const { username, token } = action.payload.data;
-        state.user = username;
-        state.token = token;
+        localStorage.setItem('user', username);
+        localStorage.setItem('token', token);
+        state.username = localStorage.getItem('user');
+        state.token = localStorage.getItem('token');
         state.errorMessage = '';
       });
   },

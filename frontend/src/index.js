@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -10,11 +9,9 @@ import store from './slices/index.js';
 
 const vdom = (
   <React.StrictMode>
-    <BrowserRouter>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </BrowserRouter>
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>
 );
 

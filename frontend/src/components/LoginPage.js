@@ -8,7 +8,6 @@ import { authUser } from '../slices/AuthSlice.js';
 const LoginPage = () => {
   const dispatch = useDispatch();
 
-  const token = useSelector((state) => state.auth.token);
   const errorMessage = useSelector((state) => state.auth.errorMessage);
   const usernameInputEl = useRef(null);
 
@@ -22,12 +21,6 @@ const LoginPage = () => {
       dispatch(authUser({ username, password }));
     },
   });
-
-  if (token && !errorMessage) {
-    return (
-      <Navigate to="/" />
-    );
-  }
 
   return (
     <Form className="col-12 col-md-6 mt-3 mt-mb-0 center form-size" onSubmit={formik.handleSubmit}>

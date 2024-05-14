@@ -22,10 +22,7 @@ code {
   margin: auto;
 }
 
-.container {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  margin-top: 200px;
+.margin-top {
+  margin-top: 5%;
 }
 
