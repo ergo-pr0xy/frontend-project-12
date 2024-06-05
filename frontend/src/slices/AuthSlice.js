@@ -1,47 +1,20 @@
 /* eslint-disable no-param-reassign */
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
-
-const setErrorMessage = (error) => {
-  switch (error) {
-    case 'ERR_BAD_REQUEST':
-      return 'Неверные имя пользователя или пароль';
-    case 'ERR_NETWORK':
-      return 'Ошибка сети';
-    default:
-      return 'Неопознанная ошибка';
-  }
-};
-
-export const authUser = createAsyncThunk(
-  'auth/authUser',
-  async ({ username, password }) => {
-    const response = await axios.post('/api/v1/login', { username, password });
-    console.log(response.data);
-    return response;
-  },
-);
+import { createSlice } from '@reduxjs/toolkit';
 
 const AuthSlice = createSlice({
   name: 'auth',
-  initialState: { username: localStorage.getItem('user'), token: localStorage.getItem('token'), errorMessage: '' },
+  initialState: { username: localStorage.getItem('user'), token: localStorage.getItem('token') },
   reducers: {
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(authUser.rejected, (state, action) => {
-        const { code: errorCode } = action.error;
-        state.errorMessage = setErrorMessage(errorCode);
-      })
-      .addCase(authUser.fulfilled, (state, action) => {
-        const { username, token } = action.payload.data;
-        localStorage.setItem('user', username);
-        localStorage.setItem('token', token);
-        state.username = localStorage.getItem('user');
-        state.token = localStorage.getItem('token');
-        state.errorMessage = '';
-      });
+    authUser: (state, action) => {
+      const { username, token } = action.payload;
+      localStorage.setItem('user', username);
+      localStorage.setItem('token', token);
+      state.username = username;
+      state.token = token;
+    },
   },
 });
+
+export const { authUser } = AuthSlice.actions;
 
 export default AuthSlice.reducer;

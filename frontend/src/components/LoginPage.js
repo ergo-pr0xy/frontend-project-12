@@ -1,25 +1,40 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
+import axios from 'axios';
 import { useFormik } from 'formik';
 import { Form, Button, FloatingLabel } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { authUser } from '../slices/AuthSlice.js';
+
+const setErrorMessage = (error) => {
+  switch (error) {
+    case 'ERR_BAD_REQUEST':
+      return 'Неверные имя пользователя или пароль';
+    case 'ERR_NETWORK':
+      return 'Ошибка сети';
+    default:
+      return 'Неопознанная ошибка';
+  }
+};
 
 const LoginPage = () => {
   const dispatch = useDispatch();
+  const [currentError, setError] = useState('');
 
-  const errorMessage = useSelector((state) => state.auth.errorMessage);
   const usernameInputEl = useRef(null);
-  const state = useSelector((currentState) => currentState);
-  console.log(state);
 
   const formik = useFormik({
     initialValues: {
       username: '',
       password: '',
     },
-    onSubmit: ({ username, password }) => {
-      usernameInputEl.current.focus();
-      dispatch(authUser({ username, password }));
+    onSubmit: async ({ username, password }) => {
+      try {
+        const response = await axios.post('/api/v1/login', { username, password });
+        const { token, username: user } = response.data;
+        dispatch(authUser({ username: user, token }));
+      } catch (error) {
+        setError(setErrorMessage(error.code));
+      }
     },
   });
 
@@ -36,7 +51,7 @@ const LoginPage = () => {
             ref={usernameInputEl}
             onChange={formik.handleChange}
             value={formik.values.username}
-            isInvalid={!!errorMessage}
+            isInvalid={!!currentError}
             required
           />
         </FloatingLabel>
@@ -51,11 +66,11 @@ const LoginPage = () => {
             placeholder="Ваш пароль"
             onChange={formik.handleChange}
             value={formik.values.password}
-            isInvalid={!!errorMessage}
+            isInvalid={!!currentError}
             required
           />
           <Form.Control.Feedback type="invalid" tooltip>
-            {errorMessage}
+            {currentError}
           </Form.Control.Feedback>
         </FloatingLabel>
       </Form.Group>
