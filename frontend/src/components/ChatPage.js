@@ -1,5 +1,4 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { addChannel, addChannels, selectors } from '../slices/ChannelsSlice.js';
@@ -9,10 +8,6 @@ const ChatPage = () => {
 
   const token = localStorage.getItem('token');
   const channels = useSelector(selectors.selectAll);
-
-  if (!token) {
-    return <Navigate to="/login" />;
-  }
 
   const fetchChannelsAndMessages = async () => {
     const response = await axios.get('/api/v1/channels', {

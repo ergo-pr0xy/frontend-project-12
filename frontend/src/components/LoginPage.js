@@ -1,5 +1,4 @@
 import React, { useRef } from 'react';
-import { Navigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { Form, Button, FloatingLabel } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,6 +9,8 @@ const LoginPage = () => {
 
   const errorMessage = useSelector((state) => state.auth.errorMessage);
   const usernameInputEl = useRef(null);
+  const state = useSelector((currentState) => currentState);
+  console.log(state);
 
   const formik = useFormik({
     initialValues: {

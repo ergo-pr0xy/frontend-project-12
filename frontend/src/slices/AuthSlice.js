@@ -17,13 +17,16 @@ export const authUser = createAsyncThunk(
   'auth/authUser',
   async ({ username, password }) => {
     const response = await axios.post('/api/v1/login', { username, password });
+    console.log(response.data);
     return response;
   },
 );
 
 const AuthSlice = createSlice({
   name: 'auth',
-  initialState: { username: null, token: null, errorMessage: '' },
+  initialState: { username: localStorage.getItem('user'), token: localStorage.getItem('token'), errorMessage: '' },
+  reducers: {
+  },
   extraReducers: (builder) => {
     builder
       .addCase(authUser.rejected, (state, action) => {
